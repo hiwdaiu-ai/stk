@@ -1,0 +1,15 @@
+yfinance
+pandas
+numpy
+ta
+transformers
+torch
+scikit-learn
+xgboost
+matplotlib
+seaborn
+streamlit
+newsapi-python
+jupyter
+ipykernel
+openpyxl
