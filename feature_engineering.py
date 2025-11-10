@@ -172,6 +172,9 @@ def merge_features():
         sentiment_df['Date'] = sentiment_df['date']
         sentiment_df['Symbol'] = sentiment_df['symbol']
         
+        # Remove timezone from tech_df for merging
+        tech_df['Date'] = tech_df['Date'].dt.tz_localize(None)
+        
         merged_df = tech_df.merge(
             sentiment_df[['Date', 'Symbol', 'sentiment_score']], 
             on=['Date', 'Symbol'], 
@@ -193,6 +196,11 @@ def merge_features():
     # Drop rows with missing values
     print("\nCleaning data...")
     print(f"  Before cleaning: {len(merged_df)} records")
+    
+    # Replace infinity with NaN
+    merged_df = merged_df.replace([np.inf, -np.inf], np.nan)
+    
+    # Drop rows with NaN
     merged_df = merged_df.dropna()
     print(f"  After cleaning: {len(merged_df)} records")
     
