@@ -1,0 +1,137 @@
+1. Data Collection
+
+Stock Data Source: Yahoo Finance (yfinance library).
+
+Symbols: Start with “AAPL”, “TSLA”, “GOOG”, and “^NSEI”.
+
+Period: Last 3 years, interval = 1 day.
+
+Fetch fields: Open, High, Low, Close, Volume.
+
+Save as data/raw/technical_data.csv.
+
+News Data Source: Use NewsAPI
+ or scraped headlines from Finviz or Reuters.
+
+Filter by company name and date.
+
+Save as data/raw/news_data.csv with columns: [date, headline, source].
+
+🧮 2. Feature Engineering
+
+Compute Technical Indicators using ta library:
+
+RSI (14)
+
+MACD (12, 26, 9)
+
+EMA (20)
+
+SMA (50)
+
+Bollinger Bands
+
+Preprocess news headlines:
+
+Clean text (remove stopwords, punctuation).
+
+Get sentiment score using FinBERT (Hugging Face model: yiyanghkust/finbert-tone).
+
+Aggregate daily mean sentiment score per date.
+
+Merge technical + sentiment data by date.
+
+Drop missing rows.
+
+Create target column:
+target = 1 if next_day_close > today_close else 0
+
+🤖 3. Model Training
+
+Split data: 70% train, 15% validation, 15% test.
+
+Use two models:
+
+Model A: XGBoost with only technical indicators.
+
+Model B: XGBoost with both technical + sentiment features.
+
+Compare both models’ accuracies and F1-scores.
+
+Print confusion matrices and feature importance plots.
+
+📊 4. Visualization Dashboard
+
+Create a simple Streamlit dashboard that:
+
+Shows a stock selector.
+
+Displays recent technical indicators.
+
+Plots predicted vs actual direction.
+
+Displays sentiment trend from news.
+
+Summarizes model performance (accuracy, precision, recall).
+
+📘 5. Documentation
+
+Generate a full project report:
+
+Title: “Hybrid Stock Market Prediction using Technical and Sentiment Analysis”
+
+Abstract: 150 words explaining motivation and summary.
+
+Modules: Data Collection, Preprocessing, Modeling, Results.
+
+Conclusion: Sentiment data improved accuracy by X%.
+
+References: Cite FinBERT, Yahoo Finance, NewsAPI.
+
+📦 6. Folder Structure
+stock-prediction/
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── models/
+│   ├── xgb_technical.pkl
+│   ├── xgb_hybrid.pkl
+│
+├── notebooks/
+│   ├── 01_data_preprocessing.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   ├── 03_model_training.ipynb
+│
+├── app/
+│   └── dashboard.py
+│
+├── report/
+│   └── Final_Report.pdf
+│
+└── requirements.txt
+
+🧩 7. Libraries to Include
+yfinance
+pandas
+numpy
+ta
+transformers
+torch
+scikit-learn
+xgboost
+matplotlib
+seaborn
+streamlit
+newsapi-python
+
+✅ Expected Output
+
+A trained hybrid model (xgb_hybrid.pkl)
+
+Accuracy comparison table (technical vs hybrid)
+
+Dashboard showing live sentiment + predictions
+
+A professional report summarizing findings
